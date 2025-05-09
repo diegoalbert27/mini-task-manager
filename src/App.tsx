@@ -1,10 +1,14 @@
+import { Layout } from './components/Layout';
 import './App.css'
+import { Home } from './components/Home';
 
 function App() {
 
   return (
     <>
-      <h1>Mini Task Manager</h1>
+      <Layout>
+        <Home />
+      </Layout>
     </>
   )
 }
