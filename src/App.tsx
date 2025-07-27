@@ -1,6 +1,6 @@
 import { Layout } from './components/Layout';
 import './App.css'
-import { Home } from './components/Home';
+import { Tasks } from './components/Tasks';
 import { Welcome } from './components/Welcome';
 import { useUserContext } from './context/UserContext';
 import { JSX } from 'react';
@@ -16,8 +16,8 @@ function App() {
 
   const pages: Page[] = [
     {
-      Component: Home,
-      name: 'Inicio'
+      Component: Tasks,
+      name: 'Tareas'
     },
     {
       Component: Users,

@@ -1,6 +1,6 @@
 import { NavItem } from "./NavItem"
 
-import { CheckSquare, House, LucideProps, Settings2, Users } from "lucide-react"
+import { CheckSquare, LucideProps, Settings2, Users } from "lucide-react"
 import { ForwardRefExoticComponent } from 'react'
 import { v4 as uuid } from 'uuid'
 
@@ -12,7 +12,6 @@ export interface NavItems {
 export const Navbar = () => {
   const navItems: NavItems[] = [
     { Icon: Users, name: 'Usuarios' },
-    { Icon: House, name: 'Inicio' },
     { Icon: CheckSquare, name: 'Tareas' },
     { Icon: Settings2, name: 'Configuracion' }
   ];

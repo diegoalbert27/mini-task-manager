@@ -18,8 +18,8 @@ export const UserContext = createContext({} as UserState)
 export const useUserContext = () => useContext(UserContext)
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
-  const [username, setUsername] = useState('')
-  const [currentPage, setCurrentPage] = useState('Inicio')
+  const [username, setUsername] = useState('Diego')
+  const [currentPage, setCurrentPage] = useState('Usuarios')
   
   const changeCurrentPage = (pageName: string) => {
     setCurrentPage(pageName)
