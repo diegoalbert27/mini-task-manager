@@ -1,12 +1,12 @@
-import { useUserContext } from "../context/UserContext"
+  import { useUserContext } from "../context/UserContext"
 import { NavItems } from "./Navbar"
 
 interface Props {
   navItem: NavItems
 } 
 
-export const NavItem = ({ navItem}: Props) => {
-  const { currentPage, changeCurrentPage } = useUserContext()
+export const NavItem = ({ navItem }: Props) => {
+  const { currentPage, changeCurrentPage, updateReloadComponent } = useUserContext()
   
   const { name, Icon } = navItem
 
@@ -14,6 +14,10 @@ export const NavItem = ({ navItem}: Props) => {
     ? 'blue' : 'zinc'
 
   const handleClick = () => {
+    if (name === currentPage) {
+      updateReloadComponent(true)
+    }
+    
     changeCurrentPage(name)
   }
   

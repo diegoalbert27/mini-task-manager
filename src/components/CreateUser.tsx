@@ -1,6 +1,4 @@
-import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useRef, useState, ChangeEvent } from "react"
 
 import { User } from '../hooks/useUsers'
 
@@ -15,9 +13,6 @@ interface Props {
 }
 
 export const CreateUser = ({ addUser }: Props) => {
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const [userImage, setUserImage] = useState('')
-
   const { register, handleSubmit, formState: { errors } } = useForm<FormInputs>({
     defaultValues: {
       email: '',
@@ -31,7 +26,6 @@ export const CreateUser = ({ addUser }: Props) => {
       email,
       lastname,
       name,
-      image: userImage
     })
   }
 
@@ -39,37 +33,8 @@ export const CreateUser = ({ addUser }: Props) => {
   const errorColorLasname = errors.lastname ? 'red-500' : 'zinc-500'
   const errorColorEmail = errors.email ? 'red-500' : 'zinc-500'
 
-  const addInputImage = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click()
-    }
-  }
-
-  const changeInputImage = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files
-
-    if (files && files.length > 0) {
-      const file = files[0]
-
-      const fileReader = new FileReader()
-      fileReader.onloadend = () => {
-        setUserImage(fileReader.result as string)
-      }
-      fileReader.readAsDataURL(file)
-    }
-  }
-
   return (
     <div className="mx-3 mt-10 border border-zinc-500 rounded-xl py-4 px-5 text-zinc-800">
-
-      <div className="m-auto border h-25 hover:bg-sky-200 w-25 rounded-full cursor-pointer" onClick={addInputImage}>
-        {
-          userImage != '' ? 
-            <img className="rounded-full p-1" src={userImage} alt="User Image" /> : 
-            <Plus className="mx-auto my-8" size={35} strokeWidth={1} />
-        }
-        <input className="hidden" type="file" onChange={changeInputImage} ref={fileInputRef} />
-      </div>
 
       <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
         <label className={`mt-3 text-${errorColorName} mb-2 text-sm`} htmlFor="name">Nombre</label>

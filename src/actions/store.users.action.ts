@@ -19,5 +19,6 @@ export const getUsersAction: GetUsersAction = () => {
     return JSON.parse(rawUsers)
   } catch (error) {
     console.log(error)
+    return []
   }
 }

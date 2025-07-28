@@ -5,6 +5,7 @@ import { Welcome } from './components/Welcome';
 import { useUserContext } from './context/UserContext';
 import { JSX } from 'react';
 import { Users } from './components/Users';
+import { Setting } from './components/Setting';
 
 interface Page {
   name: string,
@@ -22,10 +23,20 @@ function App() {
     {
       Component: Users,
       name: 'Usuarios'
+    },
+    {
+      Component: Setting,
+      name: 'Ajustes'
     }
   ]
 
   const page = pages.find(page => page.name === currentPage)
+  
+  const renderPageContent = () => {
+    if (!page) return null
+    const { Component } = page
+    return <Component />
+  }
   
   return (
     <>
@@ -33,7 +44,7 @@ function App() {
         isAuthenticated ? (
           <Layout username={username}>
             {
-              page && page.Component()
+              renderPageContent()
             }
           </Layout>
         ) : <Welcome />

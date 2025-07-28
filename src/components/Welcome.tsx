@@ -11,11 +11,10 @@ export const Welcome = () => {
       username: '',
     }
   })
-  
+
   const { loginWithUsername } = useUserContext()
 
   const onSubmit = (myForm: FormInputs) => {
-    console.log(myForm.username);
     loginWithUsername(myForm.username)
   }
 
@@ -26,7 +25,7 @@ export const Welcome = () => {
       <div className="border-1 border-zinc-500 rounded-lg p-5">
         <h1 className="text-2xl">Bienvenido</h1>
         
-        <form className="mt-8 flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+        <form className="mt-4 flex flex-col" onSubmit={handleSubmit(onSubmit)}>
           <label className="text-zinc-700 text-center mb-3" htmlFor="fullname">Ingresa tu nombre completo para iniciar</label>
           <input className={`outline-none text-sm border-1 border-${errorColor} text-${errorColor} rounded-md p-3`} type="text" placeholder='Nombre' id='fullname' {...register('username', { required: true, maxLength: 64, })} />
           

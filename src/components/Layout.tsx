@@ -13,7 +13,7 @@ export const Layout = ({ username, children }: Props) => {
         <h1 className="text-2xl text-zinc-800">Bienvenido, {username}</h1>
       </div>
       
-      <div className='mx-5'>
+      <div className='mx-5 mb-22'>
         {children}
       </div>
       

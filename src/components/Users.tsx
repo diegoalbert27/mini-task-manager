@@ -1,14 +1,17 @@
 import { UserPlus } from "lucide-react"
 import { v4 as uuid } from 'uuid'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { User, useUsers } from "../hooks/useUsers"
 
 import { UserCard } from "./UserCard"
 import { CreateUser } from "./CreateUser"
 import { UserDetail } from "./UserDetail"
+import { useUserContext } from "../context/UserContext"
 
 export const Users = () => {
+  const { reloadComponent, updateReloadComponent } = useUserContext()
+
   const { users, addUser } = useUsers()
   
   const [user, setUser] = useState<User | null>(null)
@@ -24,26 +27,34 @@ export const Users = () => {
     setIsAddingUser(false)
   }
 
+  useEffect(() => { 
+    if (reloadComponent) {
+      setUser(null)
+      setIsAddingUser(false)
+      updateReloadComponent(false)
+    }
+  }, [reloadComponent])
+
   return (
     <>
       {
         users.length === 0 && !isAddingUser && (
-          <div className="text-center text-zinc-600 h-100 relative">
-            <p className="absolute left-50 top-50">Sin Usuarios</p>
+          <div className="text-center text-zinc-600 h-100">
+            <p className="mt-50 ">Sin Usuarios</p>
           </div>
         )
       }
 
       {
         !user && !isAddingUser && (
-          users.map(({ email, lastname, name, image }) => (
-            <UserCard key={uuid()} name={name} lastname={lastname} email={email} image={image} changeUserDetail={changeUserDetail} />
+          users.map(({ email, lastname, name }) => (
+            <UserCard key={uuid()} name={name} lastname={lastname} email={email} changeUserDetail={changeUserDetail} />
           ))
         )
       }
 
       {
-        user && <UserDetail name={user.name} lastname={user.lastname} email={user.email} image={user.image}  />
+        user && <UserDetail name={user.name} lastname={user.lastname} email={user.email}  />
       }
 
       {

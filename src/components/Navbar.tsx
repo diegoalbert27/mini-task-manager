@@ -13,7 +13,7 @@ export const Navbar = () => {
   const navItems: NavItems[] = [
     { Icon: Users, name: 'Usuarios' },
     { Icon: CheckSquare, name: 'Tareas' },
-    { Icon: Settings2, name: 'Configuracion' }
+    { Icon: Settings2, name: 'Ajustes' }
   ];
 
   return (
