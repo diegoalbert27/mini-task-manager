@@ -20,7 +20,7 @@ interface UserState {
 const defaultUserState: UserState = {
   username: '',
   isAuthenticated: false,
-  currentPage: 'Ajustes',
+  currentPage: 'Tareas',
   reloadComponent: false,
   loginWithUsername: () => {},
   changeCurrentPage: () => {},
@@ -33,7 +33,7 @@ export const useUserContext = () => useContext(UserContext)
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
   const { admin, addAdmin } = useAdmin()
-  const [currentPage, setCurrentPage] = useState('Ajustes')
+  const [currentPage, setCurrentPage] = useState('Tareas')
   const [reloadComponent, setReloadComponent] = useState(false)
 
   const updateReloadComponent = (reload: boolean) => {

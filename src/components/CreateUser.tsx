@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from 'uuid'
 
 import { User } from '../hooks/useUsers'
 
@@ -23,9 +24,11 @@ export const CreateUser = ({ addUser }: Props) => {
 
   const onSubmit = ({ email, lastname, name }: FormInputs) => {
     addUser({
+      id: uuidv4(),
       email,
       lastname,
       name,
+      tasks: []
     })
   }
 

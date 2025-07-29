@@ -1,10 +1,14 @@
+import { TaskCard } from "./TaskCard"
+import { Task } from "./Tasks"
+
 interface Props {
   name: string
   lastname: string
   email: string
+  tasks: Task[]
 }
 
-export const UserDetail = ({ email, lastname, name }: Props) => {
+export const UserDetail = ({ email, lastname, name, tasks }: Props) => {
   return (
     <>
       <div className='border border-zinc-500 rounded-xl py-4 px-5 flex flex-col text-zinc-800 text-center mt-8'>
@@ -21,7 +25,11 @@ export const UserDetail = ({ email, lastname, name }: Props) => {
           </div>
 
           <div className='overflow-auto h-40 p-2'>
-            <span className="text-sm text-zinc-500">No hay tareas</span>
+            {
+              tasks.length > 0 ? tasks.map((task) => (
+                <TaskCard key={task.id} task={task.task} description={task.description} email={task.email} />
+              )) : <span className="text-sm text-zinc-500">No hay tareas</span>
+            }
           </div>
         </div>
       </div>

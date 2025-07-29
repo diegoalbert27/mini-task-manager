@@ -12,7 +12,7 @@ import { useUserContext } from "../context/UserContext"
 export const Users = () => {
   const { reloadComponent, updateReloadComponent } = useUserContext()
 
-  const { users, addUser } = useUsers()
+  const { users, addUser, usersTasks } = useUsers()
   
   const [user, setUser] = useState<User | null>(null)
   const [isAddingUser, setIsAddingUser] = useState(false)
@@ -54,7 +54,7 @@ export const Users = () => {
       }
 
       {
-        user && <UserDetail name={user.name} lastname={user.lastname} email={user.email}  />
+        user && <UserDetail name={user.name} lastname={user.lastname} email={user.email} tasks={usersTasks} />
       }
 
       {
