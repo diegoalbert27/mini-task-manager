@@ -1,15 +1,19 @@
-import { User } from "../hooks/useUsers"
+import { User, UserTask } from "../../hooks/useUsers"
 
 interface Props {
   name: string
   lastname: string
   email: string
+  tasks: UserTask[]
+  id: string
   changeUserDetail: (user: User) => void
 }
 
-export const UserCard = ({ email, lastname, name, changeUserDetail }: Props) => {  
+export const UserCard = ({ email, lastname, name, tasks, id, changeUserDetail }: Props) => {  
   const handleClick = () => {
     changeUserDetail({
+      id,
+      tasks,
       name,
       email,
       lastname,

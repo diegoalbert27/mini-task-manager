@@ -1,11 +1,11 @@
 import { Layout } from './components/Layout';
 import './App.css'
-import { Tasks } from './components/Tasks';
-import { Welcome } from './components/Welcome';
+import { Tasks } from './pages/Tasks/Tasks';
+import { Welcome } from './pages/Welcome';
 import { useUserContext } from './context/UserContext';
 import { JSX } from 'react';
-import { Users } from './components/Users';
-import { Setting } from './components/Setting';
+import { Users } from './pages/Users/Users';
+import { Setting } from './pages/Setting/Setting';
 
 interface Page {
   name: string,

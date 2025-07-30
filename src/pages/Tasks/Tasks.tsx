@@ -1,8 +1,8 @@
 import { ListPlus } from "lucide-react"
 import { TaskCard } from "./TaskCard"
-import { useUserContext } from "../context/UserContext"
+import { useUserContext } from "../../context/UserContext"
 import { useEffect, useState } from "react"
-import { useUsers, UserTask } from "../hooks/useUsers"
+import { useUsers, UserTask } from "../../hooks/useUsers"
 import { CreateTask } from "./CreateTask"
 import { v4 as uuid } from 'uuid'
 
@@ -16,7 +16,11 @@ export interface Task {
 export const Tasks = () => {
   const { reloadComponent, updateReloadComponent } = useUserContext()
 
-  const { users, addTaskToUser, usersTasks } = useUsers()
+  const { users, addTaskToUser, usersTasks, searchUsers } = useUsers()
+
+  const handleSearchUsers = (search: string) => {
+    searchUsers(search)
+  }
 
   const [task, setTask] = useState<UserTask | null>(null)
   const [isAddingTask, setIsAddingTask] = useState(false)
@@ -57,7 +61,7 @@ export const Tasks = () => {
       }
 
       {
-        isAddingTask && <CreateTask addTask={handleAddTask} users={users} />
+        isAddingTask && <CreateTask addTask={handleAddTask} users={users} searchUsers={handleSearchUsers} />
       }
 
       {

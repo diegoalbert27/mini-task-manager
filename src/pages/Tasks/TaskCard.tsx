@@ -14,7 +14,7 @@ export const TaskCard = ({ task, description, email }: Props) => {
 
       <p className='text-sm'>{description}</p>
 
-      <span className='text-xs text-zinc-600'>owner - {email}</span>
+      <span className='text-xs text-zinc-600'>De: {email}</span>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from 'uuid'
 
-import { User } from '../hooks/useUsers'
+import { User } from '../../hooks/useUsers'
 
 type FormInputs = {
   name: string

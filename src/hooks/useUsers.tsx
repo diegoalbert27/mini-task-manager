@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { getUsersAction, storeUsersAction } from "../actions/store.users.action"
-import { Task } from "../components/Tasks"
+import { Task } from "../pages/Tasks/Tasks"
 
 export interface UserTask {
   id: string
@@ -56,10 +56,21 @@ export const useUsers = () => {
     setUsersTasks(getUsersTasks(newUsers))
   }
 
+  const searchUsers = (search: string) => {
+    if (search !== '') {
+      const newUsers = users.filter(user => user.name.toLowerCase().includes(search.toLowerCase()) || user.lastname.toLowerCase().includes(search.toLowerCase()) || user.email.toLowerCase().includes(search.toLowerCase()))
+      setUsers(newUsers)
+    } else {
+      const users = getUsersAction()
+      setUsers(users)
+    }
+  }
+
   return {
     users,
     usersTasks,
     addUser,
-    addTaskToUser
+    addTaskToUser,
+    searchUsers
   }
 }
