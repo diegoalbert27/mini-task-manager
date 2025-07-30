@@ -2,31 +2,61 @@ import {
   createContext, 
   useContext, 
   PropsWithChildren, 
-  useState
+  useState,
 } from 'react'
+
+import { useAdmin } from '../hooks/useAdmin'
 
 interface UserState {
   username: string
   isAuthenticated: boolean
+  currentPage: string
+  reloadComponent: boolean
   loginWithUsername: (username: string) => void
+  changeCurrentPage: (pageName: string) => void
+  updateReloadComponent: (reload: boolean) => void
 }
 
-export const UserContext = createContext({} as UserState)
+const defaultUserState: UserState = {
+  username: '',
+  isAuthenticated: false,
+  currentPage: 'Tareas',
+  reloadComponent: false,
+  loginWithUsername: () => {},
+  changeCurrentPage: () => {},
+  updateReloadComponent: () => {}
+}
+
+export const UserContext = createContext<UserState>(defaultUserState)
 
 export const useUserContext = () => useContext(UserContext)
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
-  const [username, setUsername] = useState('')
+  const { admin, addAdmin } = useAdmin()
+  const [currentPage, setCurrentPage] = useState('Tareas')
+  const [reloadComponent, setReloadComponent] = useState(false)
+
+  const updateReloadComponent = (reload: boolean) => {
+    setReloadComponent(reload)
+  }
+  
+  const changeCurrentPage = (pageName: string) => {
+    setCurrentPage(pageName)
+  }
 
   const loginWithUsername = (username: string) => {
-    setUsername(username)
+    addAdmin({ username })
   }
 
   return (
     <UserContext.Provider value={{
-      username,
-      isAuthenticated: username !== '',
-      loginWithUsername
+      username: admin.username,
+      isAuthenticated: admin.username !== '',
+      currentPage,
+      loginWithUsername,
+      changeCurrentPage,
+      reloadComponent,
+      updateReloadComponent
     }}>
       {children}
     </UserContext.Provider>
