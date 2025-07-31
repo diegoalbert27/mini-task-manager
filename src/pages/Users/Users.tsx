@@ -50,14 +50,6 @@ export const Users = () => {
       
       {
         isAddingUser ? <h2 className='text-xl mb-4 text-zinc-800'>Crear Usuario</h2> : <h2 className='text-xl mb-4 text-zinc-800'>Usuarios</h2>
-      }  
-      
-      {
-        users.length === 0 && !isAddingUser && (
-          <div className="text-center text-zinc-600 h-100">
-            <p className="mt-50 ">Sin Usuarios</p>
-          </div>
-        )
       }
 
       {
@@ -72,6 +64,13 @@ export const Users = () => {
           </>
         )
       }
+
+      {
+        users.length === 0 && !isAddingUser && (
+          <div className="flex items-center justify-center h-[60vh] text-center text-zinc-600">
+            <p>Sin Usuarios</p>
+          </div>
+        )}
 
       {
         user && <UserDetail name={user.name} lastname={user.lastname} email={user.email} userTasks={user.tasks} userId={user.id} />
