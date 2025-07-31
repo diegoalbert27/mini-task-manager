@@ -9,6 +9,7 @@ import { CreateUser } from "./CreateUser"
 import { UserDetail } from "./UserDetail"
 import { useUserContext } from "../../context/UserContext"
 import { Search } from "../../components/Search"
+import { success, Alert } from "../../components/Alert"
 
 export const Users = () => {
   const { reloadComponent, updateReloadComponent } = useUserContext()
@@ -27,6 +28,7 @@ export const Users = () => {
     addUser(user)
     setUser(user)
     setIsAddingUser(false)
+    success('Usuario creado')
   }
 
   useEffect(() => { 
@@ -44,6 +46,8 @@ export const Users = () => {
 
   return (
     <>    
+      <Alert />
+      
       {
         isAddingUser ? <h2 className='text-xl mb-4 text-zinc-800'>Crear Usuario</h2> : <h2 className='text-xl mb-4 text-zinc-800'>Usuarios</h2>
       }  
@@ -70,7 +74,7 @@ export const Users = () => {
       }
 
       {
-        user && <UserDetail name={user.name} lastname={user.lastname} email={user.email} userTasks={user.tasks} />
+        user && <UserDetail name={user.name} lastname={user.lastname} email={user.email} userTasks={user.tasks} userId={user.id} />
       }
 
       {

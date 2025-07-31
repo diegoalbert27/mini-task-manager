@@ -28,7 +28,8 @@ export const useUsers = () => {
         id: task.id,
         email: user.email,
         task: task.task,
-        description: task.description
+        description: task.description,
+        userId: user.id
       }))
       
       tasks.push(...userTasks)

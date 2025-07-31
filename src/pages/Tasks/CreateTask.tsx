@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import { User, UserTask } from "../../hooks/useUsers";
 import { v4 as uuid } from 'uuid'
 import { useState } from "react";
@@ -54,10 +54,20 @@ export const CreateTask = ({ addTask, users, searchUsers }: Props) => {
     }
   }
 
+  const handleError = (errors: FieldErrors<FormInputs>) => {
+    if (Object.keys(errors).length > 0) {
+      if (!user) {
+        setUserError(true)
+      } else {
+        setUserError(false)
+      }
+    }
+  }
+
   return (
     <div className="mx-3 mt-10 border border-zinc-500 rounded-xl py-4 px-5 text-zinc-800">
 
-      <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+      <form className="flex flex-col" onSubmit={handleSubmit(onSubmit, handleError)}>
         {
           !showUserOptions ? <TaskForm register={register} errors={errors} users={users} user={user} showUserOptions={() => setShowUserOptions(true)} userError={userError} /> : <UsersOption searchUsers={searchUsers} users={users} chooseUser={handleChooseUser} />
         }

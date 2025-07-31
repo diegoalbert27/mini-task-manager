@@ -4,13 +4,22 @@ import { useUserContext } from "../../context/UserContext"
 import { useEffect, useState } from "react"
 import { useUsers, UserTask } from "../../hooks/useUsers"
 import { CreateTask } from "./CreateTask"
-import { v4 as uuid } from 'uuid'
+import { TaskDetail } from "./TaskDetail"
+import { success, Alert } from "../../components/Alert"
 
 export interface Task {
   id: string
   email: string
+  userId: string
   task: string
   description: string
+}
+
+export interface User {
+  id: string
+  name: string
+  lastname: string
+  email: string
 }
 
 export const Tasks = () => {
@@ -23,6 +32,7 @@ export const Tasks = () => {
   }
 
   const [task, setTask] = useState<UserTask | null>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [isAddingTask, setIsAddingTask] = useState(false)
 
   useEffect(() => {
@@ -35,14 +45,34 @@ export const Tasks = () => {
   
   const handleAddTask = (userId: string, task: UserTask) => {
     addTaskToUser(userId, task)
+    const user = users.find((user) => user.id === userId)
+
+    if (user) {
+      setTask(task)
+      setUser(user)
+      success('Tarea creada')
+    }
+
     setIsAddingTask(false)
   }
 
+  const showTaskDetail = (userId: string, taskId: string) => {
+    const task = usersTasks.find((task) => task.id === taskId)
+    const user = users.find((user) => user.id === userId)
+    
+    if (task && user) {
+      setTask(task)
+      setUser(user)
+    }
+  }
+
+  const title = isAddingTask ? <h2 className='text-xl mb-4 text-zinc-800'>Crear Tarea</h2> : <h2 className='text-xl mb-4 text-zinc-800'>Tareas</h2>
+
   return (
     <div>
-      {
-        isAddingTask ? <h2 className='text-xl mb-4 text-zinc-800'>Crear Tarea</h2> : <h2 className='text-xl mb-4 text-zinc-800'>Tareas</h2>
-      }
+      <Alert />
+      
+      {(!task && !user) && title}
 
       {
         usersTasks.length === 0 && !isAddingTask && (
@@ -54,14 +84,18 @@ export const Tasks = () => {
 
       {
         !task && !isAddingTask && (
-          usersTasks.map(({ email, task, description }) => (
-            <TaskCard key={uuid()} task={task} description={description} email={email ?? 'Sin email'} />
+          usersTasks.map(({ email, task, description, id, userId }) => (
+            <TaskCard key={id} task={task} description={description} email={email ?? 'Sin email'} userId={userId} taskId={id} showTaskDetail={showTaskDetail} />
           ))
         )
       }
 
       {
         isAddingTask && <CreateTask addTask={handleAddTask} users={users} searchUsers={handleSearchUsers} />
+      }
+
+      {
+        (task && user) && <TaskDetail task={task} user={user} />
       }
 
       {

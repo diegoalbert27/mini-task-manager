@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form"
 import { useUserContext } from "../../context/UserContext";
+import { success, Alert } from "../../components/Alert";
 
 type FormInputs = {
   username: string
@@ -16,6 +17,7 @@ export const Setting = () => {
 
   const onSubmit = (myForm: FormInputs) => {
     loginWithUsername(myForm.username)
+    success('Usuario actualizado')
   }
 
   const errorColor = errors.username ? 'red-500' : 'zinc-500'
@@ -23,6 +25,8 @@ export const Setting = () => {
   return (
     <>
       <div className="mt-20 mx-2">
+        <Alert />
+        
         <h1 className="text-2xl mb-4">Ajustes</h1>
         
         <div className="border-1 border-zinc-500 rounded-lg p-5">

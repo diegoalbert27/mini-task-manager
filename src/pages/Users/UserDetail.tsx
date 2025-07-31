@@ -7,10 +7,11 @@ interface Props {
   name: string
   lastname: string
   email: string
+  userId: string
   userTasks: UserTask[]
 }
 
-export const UserDetail = ({ email, lastname, name, userTasks }: Props) => {
+export const UserDetail = ({ email, userId, lastname, name, userTasks }: Props) => {
   const [tasks, setTasks] = useState<Task[]>([])
 
   useEffect(() => {
@@ -18,11 +19,16 @@ export const UserDetail = ({ email, lastname, name, userTasks }: Props) => {
       id: task.id,
       task: task.task,
       description: task.description,
-      email: email
+      email: email,
+      userId: userId
     }))
 
     setTasks(tasks)
   }, [userTasks])
+
+  const showTaskDetail = (userId: string, taskId: string) => {
+    console.log(userId, taskId)
+  }
   
   return (
     <>
@@ -42,7 +48,7 @@ export const UserDetail = ({ email, lastname, name, userTasks }: Props) => {
           <div className='overflow-auto h-40 p-2'>
             {
               tasks.length > 0 ? tasks.map((task) => (
-                <TaskCard key={task.id} task={task.task} description={task.description} email={task.email} />
+                <TaskCard key={task.id} task={task.task} description={task.description} email={task.email} userId={task.userId} taskId={task.id} showTaskDetail={showTaskDetail} />
               )) : <span className="text-sm text-zinc-500">No hay tareas</span>
             }
           </div>
