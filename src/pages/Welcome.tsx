@@ -21,7 +21,7 @@ export const Welcome = () => {
   const errorColor = errors.username ? 'red-500' : 'zinc-500'
 
   return (
-    <div className="flex flex-col justify-center h-svh mx-12">
+    <div className="flex flex-col justify-center h-svh mx-12 lg:max-w-md lg:mx-auto">
       <div className="border-1 border-zinc-500 rounded-lg p-5">
         <h1 className="text-2xl">Bienvenido</h1>
         

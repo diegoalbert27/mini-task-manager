@@ -24,7 +24,7 @@ export const Setting = () => {
 
   return (
     <>
-      <div className="mt-20 mx-2">
+      <div className="mt-20 mx-2 lg:max-w-md lg:mx-auto">
         <Alert />
         
         <h1 className="text-2xl mb-4">Ajustes</h1>
