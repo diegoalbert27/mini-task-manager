@@ -2,6 +2,12 @@
 
 Una aplicación de gestión de tareas moderna y responsive construida con React, TypeScript y Tailwind CSS. Diseñada mobile-first con adaptación completa para desktop.
 
+## 🌐 Demo en Vivo
+
+**[Ver aplicación en funcionamiento →](https://mini-task-manager-xi.vercel.app/)**
+
+![Mini Task Manager Preview](./public/mini-task-manager.png)
+
 ## 🚀 Características Principales
 
 - **Gestión de Usuarios**: Crear, buscar y administrar usuarios del sistema
