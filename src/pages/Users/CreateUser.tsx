@@ -37,7 +37,7 @@ export const CreateUser = ({ addUser }: Props) => {
   const errorColorEmail = errors.email ? 'red-500' : 'zinc-500'
 
   return (
-    <div className="mx-3 mt-10 border border-zinc-500 rounded-xl py-4 px-5 text-zinc-800">
+    <div className="mx-3 mt-10 lg:max-w-md lg:mx-auto border border-zinc-500 rounded-xl py-4 px-5 text-zinc-800">
 
       <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
         <label className={`mt-3 text-${errorColorName} mb-2 text-sm`} htmlFor="name">Nombre</label>

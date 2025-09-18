@@ -9,6 +9,7 @@ import { CreateUser } from "./CreateUser"
 import { UserDetail } from "./UserDetail"
 import { useUserContext } from "../../context/UserContext"
 import { Search } from "../../components/Search"
+import { success, Alert } from "../../components/Alert"
 
 export const Users = () => {
   const { reloadComponent, updateReloadComponent } = useUserContext()
@@ -27,6 +28,7 @@ export const Users = () => {
     addUser(user)
     setUser(user)
     setIsAddingUser(false)
+    success('Usuario creado')
   }
 
   useEffect(() => { 
@@ -44,33 +46,38 @@ export const Users = () => {
 
   return (
     <>    
-      {
-        isAddingUser ? <h2 className='text-xl mb-4 text-zinc-800'>Crear Usuario</h2> : <h2 className='text-xl mb-4 text-zinc-800'>Usuarios</h2>
-      }  
+      <Alert />
       
       {
-        users.length === 0 && !isAddingUser && (
-          <div className="text-center text-zinc-600 h-100">
-            <p className="mt-50 ">Sin Usuarios</p>
-          </div>
-        )
+        isAddingUser ? <h2 className='text-xl mb-4 text-zinc-800'>Crear Usuario</h2> : <h2 className='text-xl mb-4 text-zinc-800'>Usuarios</h2>
       }
 
       {
         !user && !isAddingUser && (
           <>
-            <Search searchItems={handleSearchUsers} search={search} />
-            {
-              users.map(({ email, lastname, name, tasks, id }) => (
-                <UserCard key={uuid()} name={name} lastname={lastname} email={email} tasks={tasks} id={id} changeUserDetail={changeUserDetail} />
-              ))
-            }
+            <div className="lg:max-w-md lg:mx-auto mb-6">
+              <Search searchItems={handleSearchUsers} search={search} />
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+              {
+                users.map(({ email, lastname, name, tasks, id }) => (
+                  <UserCard key={uuid()} name={name} lastname={lastname} email={email} tasks={tasks} id={id} changeUserDetail={changeUserDetail} />
+                ))
+              }
+            </div>
           </>
         )
       }
 
       {
-        user && <UserDetail name={user.name} lastname={user.lastname} email={user.email} userTasks={user.tasks} />
+        users.length === 0 && !isAddingUser && (
+          <div className="flex items-center justify-center h-[60vh] text-center text-zinc-600">
+            <p>Sin Usuarios</p>
+          </div>
+        )}
+
+      {
+        user && <UserDetail name={user.name} lastname={user.lastname} email={user.email} userTasks={user.tasks} userId={user.id} />
       }
 
       {
@@ -78,7 +85,7 @@ export const Users = () => {
       }
 
       {
-        (!isAddingUser && !user) && <button onClick={() => setIsAddingUser(!isAddingUser)} className="bg-blue-500 text-white p-3 rounded-md hover:bg-sky-700 cursor-pointer shadow-md fixed bottom-25 right-5">
+        (!isAddingUser && !user) && <button onClick={() => setIsAddingUser(!isAddingUser)} className="bg-blue-500 text-white p-3 rounded-md hover:bg-sky-700 cursor-pointer shadow-md fixed bottom-25 right-5 lg:bottom-8 lg:right-8">
           <UserPlus />
         </button>
       }

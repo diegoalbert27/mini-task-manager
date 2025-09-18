@@ -24,7 +24,7 @@ export const TaskForm = ({ register, errors, users, user, showUserOptions, userE
 
 	const errorColorTask = getErrorColor(!!errors.task)
 	const errorColorDescription = getErrorColor(!!errors.description)
-	const errorColorUser = getErrorColor(userError || Object.keys(errors).length > 0)
+	const errorColorUser = getErrorColor(userError)
 
 	return (
 		<>
@@ -56,15 +56,16 @@ export const TaskForm = ({ register, errors, users, user, showUserOptions, userE
 							</div>
             </div>
 					) : (
-						<div className="flex items-center gap-2">
-							<span className="mr-18">Seleccione un usuario</span> <Menu />
+						<div className="flex justify-between w-full">
+							<span>Seleccione un usuario</span>
+							<Menu />
 						</div>
 					)
 				}
 			</div>
 
 			{
-				(userError || Object.keys(errors).length > 0) && <span className="text-sm mt-1 text-red-500">Seleccione un usuario</span>
+				(userError) && <span className="text-sm mt-1 text-red-500">Seleccione un usuario</span>
 			}
 
 			{

@@ -1,9 +1,10 @@
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import { User, UserTask } from "../../hooks/useUsers";
 import { v4 as uuid } from 'uuid'
 import { useState } from "react";
 import { TaskForm } from "./TaskForm";
 import { UsersOption } from "./UsersOption";
+import { StatusOption } from "../../enums/statusOption.enum";
 
 type FormInputs = {
   task: string
@@ -36,7 +37,8 @@ export const CreateTask = ({ addTask, users, searchUsers }: Props) => {
       addTask(user.id, {
         description,
         task,
-        id: uuid()
+        id: uuid(),
+        status: StatusOption.PENDING
       })
     } else {
       setUserError(true)
@@ -54,10 +56,20 @@ export const CreateTask = ({ addTask, users, searchUsers }: Props) => {
     }
   }
 
-  return (
-    <div className="mx-3 mt-10 border border-zinc-500 rounded-xl py-4 px-5 text-zinc-800">
+  const handleError = (errors: FieldErrors<FormInputs>) => {
+    if (Object.keys(errors).length > 0) {
+      if (!user) {
+        setUserError(true)
+      } else {
+        setUserError(false)
+      }
+    }
+  }
 
-      <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+  return (
+    <div className="mx-3 mt-10 lg:max-w-2xl lg:mx-auto border border-zinc-500 rounded-xl py-4 px-5 text-zinc-800">
+
+      <form className="flex flex-col" onSubmit={handleSubmit(onSubmit, handleError)}>
         {
           !showUserOptions ? <TaskForm register={register} errors={errors} users={users} user={user} showUserOptions={() => setShowUserOptions(true)} userError={userError} /> : <UsersOption searchUsers={searchUsers} users={users} chooseUser={handleChooseUser} />
         }
