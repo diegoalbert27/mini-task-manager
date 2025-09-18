@@ -6,6 +6,7 @@ import { useUsers, UserTask } from "../../hooks/useUsers"
 import { CreateTask } from "./CreateTask"
 import { TaskDetail } from "./TaskDetail"
 import { success, Alert } from "../../components/Alert"
+import { StatusOption } from "../../enums/statusOption.enum"
 
 export interface Task {
   id: string
@@ -13,6 +14,7 @@ export interface Task {
   userId: string
   task: string
   description: string
+  status: string
 }
 
 export interface User {
@@ -25,7 +27,7 @@ export interface User {
 export const Tasks = () => {
   const { reloadComponent, updateReloadComponent } = useUserContext()
 
-  const { users, addTaskToUser, usersTasks, searchUsers } = useUsers()
+  const { users, addTaskToUser, usersTasks, searchUsers, updateTaskStatus } = useUsers()
 
   const handleSearchUsers = (search: string) => {
     searchUsers(search)
@@ -42,6 +44,12 @@ export const Tasks = () => {
       updateReloadComponent(false)
     }
   }, [reloadComponent])
+
+  useEffect(() => {
+    if (user && task) {
+      showTaskDetail(user.id, task.id)
+    }
+  }, [usersTasks])
   
   const handleAddTask = (userId: string, task: UserTask) => {
     addTaskToUser(userId, task)
@@ -66,13 +74,29 @@ export const Tasks = () => {
     }
   }
 
-  const title = isAddingTask ? <h2 className='text-xl mb-4 text-zinc-800'>Crear Tarea</h2> : <h2 className='text-xl mb-4 text-zinc-800'>Tareas</h2>
+  const handleUpdateTaskStatus = (userId: string, taskId: string, status: string) => {
+    updateTaskStatus(userId, taskId, status)
+    success('Tarea actualizada')
+  }
 
   return (
     <div>
       <Alert />
-      
-      {(!task && !user) && title}
+
+      <div className="flex my-4 gap-1 flex-wrap">
+        {
+        (!isAddingTask && !task) && (
+          <>
+            <span onClick={() => console.log('dasdas')} className='border-1 px-4 py-2 rounded-full text-xs cursor-pointer hover:bg-black hover:text-amber-50'>Todos</span>
+            {
+              Object.values(StatusOption).map((status) => (
+                            <span key={status} onClick={() => console.log('dasdas')} className='border-1 px-4 py-2 rounded-full text-xs cursor-pointer hover:bg-black hover:text-amber-50'>{status}</span>
+                          ))
+            }
+          </>
+        )
+      }
+      </div>
 
       {
         usersTasks.length === 0 && !isAddingTask && (
@@ -84,8 +108,8 @@ export const Tasks = () => {
 
       {
         !task && !isAddingTask && (
-          usersTasks.map(({ email, task, description, id, userId }) => (
-            <TaskCard key={id} task={task} description={description} email={email ?? 'Sin email'} userId={userId} taskId={id} showTaskDetail={showTaskDetail} />
+          usersTasks.map(({ email, task, description, id, userId, status }) => (
+            <TaskCard key={id} task={task} description={description} email={email ?? 'Sin email'} userId={userId} taskId={id} showTaskDetail={showTaskDetail} status={status} />
           ))
         )
       }
@@ -95,7 +119,7 @@ export const Tasks = () => {
       }
 
       {
-        (task && user) && <TaskDetail task={task} user={user} />
+        (task && user) && <TaskDetail task={task} user={user} updateTaskStatus={handleUpdateTaskStatus} />
       }
 
       {

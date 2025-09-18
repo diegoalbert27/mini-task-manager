@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid'
 import { useState } from "react";
 import { TaskForm } from "./TaskForm";
 import { UsersOption } from "./UsersOption";
+import { StatusOption } from "../../enums/statusOption.enum";
 
 type FormInputs = {
   task: string
@@ -36,7 +37,8 @@ export const CreateTask = ({ addTask, users, searchUsers }: Props) => {
       addTask(user.id, {
         description,
         task,
-        id: uuid()
+        id: uuid(),
+        status: StatusOption.PENDING
       })
     } else {
       setUserError(true)

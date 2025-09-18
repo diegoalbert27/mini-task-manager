@@ -54,10 +54,11 @@ export const TaskForm = ({ register, errors, users, user, showUserOptions, userE
 								<h3 className='text-lg truncate'>{`${user.name} ${user.lastname}`}</h3>
 								<p className='text-zinc-650 text-sm truncate'>{user.email}</p>
 							</div>
-            			</div>
+            </div>
 					) : (
-						<div className="flex items-center gap-2">
-							<span className="mr-18">Seleccione un usuario</span> <Menu />
+						<div className="flex justify-between w-full">
+							<span>Seleccione un usuario</span>
+							<Menu />
 						</div>
 					)
 				}

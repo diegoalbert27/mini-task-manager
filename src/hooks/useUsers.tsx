@@ -6,6 +6,7 @@ export interface UserTask {
   id: string
   task: string
   description: string
+  status: string
 }
 
 export interface User {
@@ -20,6 +21,12 @@ export const useUsers = () => {
   const [users, setUsers] = useState<User[]>([])
   const [usersTasks, setUsersTasks] = useState<Task[]>([])
 
+  useEffect(() => {
+    const users = getUsersAction()
+    setUsers(users)
+    setUsersTasks(getUsersTasks(users))
+  }, [])
+
   const getUsersTasks = (users: User[]) => {
     const tasks: Task[] = []
     
@@ -29,7 +36,8 @@ export const useUsers = () => {
         email: user.email,
         task: task.task,
         description: task.description,
-        userId: user.id
+        userId: user.id,
+        status: task.status
       }))
       
       tasks.push(...userTasks)
@@ -37,12 +45,6 @@ export const useUsers = () => {
 
     return tasks
   }
-
-  useEffect(() => {
-    const users = getUsersAction()
-    setUsers(users)
-    setUsersTasks(getUsersTasks(users))
-  }, [])
 
   const addUser = (user: User) => {
     const newUsers = [...users, user]
@@ -67,11 +69,23 @@ export const useUsers = () => {
     }
   }
 
+  const updateTaskStatus = (userId: string, taskId: string, status: string) => {
+    const user = users.find(user => user.id === userId)
+    if (user) {
+      const newTasks = user.tasks.map(task => task.id === taskId ? { ...task, status } : task)
+      const newUsers = users.map(user => user.id === userId ? { ...user, tasks: newTasks } : user)
+      storeUsersAction(newUsers)
+      setUsers(newUsers)
+      setUsersTasks(getUsersTasks(newUsers))
+    }
+  }
+
   return {
     users,
     usersTasks,
     addUser,
     addTaskToUser,
-    searchUsers
+    searchUsers,
+    updateTaskStatus
   }
 }

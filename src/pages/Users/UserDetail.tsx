@@ -20,7 +20,8 @@ export const UserDetail = ({ email, userId, lastname, name, userTasks }: Props) 
       task: task.task,
       description: task.description,
       email: email,
-      userId: userId
+      userId: userId,
+      status: task.status
     }))
 
     setTasks(tasks)
@@ -48,7 +49,7 @@ export const UserDetail = ({ email, userId, lastname, name, userTasks }: Props) 
           <div className='overflow-auto h-40 p-2'>
             {
               tasks.length > 0 ? tasks.map((task) => (
-                <TaskCard key={task.id} task={task.task} description={task.description} email={task.email} userId={task.userId} taskId={task.id} showTaskDetail={showTaskDetail} />
+                <TaskCard key={task.id} task={task.task} description={task.description} email={task.email} userId={task.userId} taskId={task.id} showTaskDetail={showTaskDetail} status={task.status} />
               )) : <span className="text-sm text-zinc-500">No hay tareas</span>
             }
           </div>
