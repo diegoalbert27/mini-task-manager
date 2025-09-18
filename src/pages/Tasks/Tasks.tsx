@@ -35,6 +35,7 @@ export const Tasks = () => {
 
   const [task, setTask] = useState<UserTask | null>(null)
   const [user, setUser] = useState<User | null>(null)
+  const [statusSelected, setStatusSelected] = useState<string>(StatusOption.ALL)
   const [isAddingTask, setIsAddingTask] = useState(false)
 
   useEffect(() => {
@@ -79,6 +80,16 @@ export const Tasks = () => {
     success('Tarea actualizada')
   }
 
+  const getStatusClass = (status: string) => {
+    let statusClasses = 'border-1 px-4 py-2 rounded-full text-xs cursor-pointer hover:bg-black hover:text-amber-50'
+    
+    if (statusSelected === status) {
+      statusClasses = 'border-1 px-4 py-2 rounded-full text-xs cursor-pointer  bg-black text-white'
+    }
+    
+    return statusClasses
+  }
+
   return (
     <div>
       <Alert />
@@ -87,11 +98,10 @@ export const Tasks = () => {
         {
         (!isAddingTask && !task) && (
           <>
-            <span onClick={() => console.log('dasdas')} className='border-1 px-4 py-2 rounded-full text-xs cursor-pointer hover:bg-black hover:text-amber-50'>Todos</span>
             {
               Object.values(StatusOption).map((status) => (
-                            <span key={status} onClick={() => console.log('dasdas')} className='border-1 px-4 py-2 rounded-full text-xs cursor-pointer hover:bg-black hover:text-amber-50'>{status}</span>
-                          ))
+                <span key={status} onClick={() => setStatusSelected(status)} className={getStatusClass(status)}>{status}</span>
+              ))
             }
           </>
         )
@@ -108,9 +118,14 @@ export const Tasks = () => {
 
       {
         !task && !isAddingTask && (
-          usersTasks.map(({ email, task, description, id, userId, status }) => (
-            <TaskCard key={id} task={task} description={description} email={email ?? 'Sin email'} userId={userId} taskId={id} showTaskDetail={showTaskDetail} status={status} />
-          ))
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+            {usersTasks
+              .filter((task) => statusSelected === StatusOption.ALL ? true : task.status === statusSelected)
+              .map(({ email, task, description, id, userId, status }) => (
+                <TaskCard key={id} task={task} description={description} email={email ?? 'Sin email'} userId={userId} taskId={id} showTaskDetail={showTaskDetail} status={status} />
+              ))
+            }
+          </div>
         )
       }
 
@@ -124,7 +139,7 @@ export const Tasks = () => {
 
       {
         (!isAddingTask && !task) && (
-          <button onClick={() => setIsAddingTask(!isAddingTask)} className="bg-blue-500 text-white p-3 rounded-md hover:bg-sky-700 cursor-pointer shadow-md fixed bottom-25 right-5">
+          <button onClick={() => setIsAddingTask(!isAddingTask)} className="bg-blue-500 text-white p-3 rounded-md hover:bg-sky-700 cursor-pointer shadow-md fixed bottom-25 right-5 lg:bottom-8 lg:right-8">
             <ListPlus />
           </button>
         )

@@ -55,12 +55,16 @@ export const Users = () => {
       {
         !user && !isAddingUser && (
           <>
-            <Search searchItems={handleSearchUsers} search={search} />
-            {
-              users.map(({ email, lastname, name, tasks, id }) => (
-                <UserCard key={uuid()} name={name} lastname={lastname} email={email} tasks={tasks} id={id} changeUserDetail={changeUserDetail} />
-              ))
-            }
+            <div className="lg:max-w-md lg:mx-auto mb-6">
+              <Search searchItems={handleSearchUsers} search={search} />
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+              {
+                users.map(({ email, lastname, name, tasks, id }) => (
+                  <UserCard key={uuid()} name={name} lastname={lastname} email={email} tasks={tasks} id={id} changeUserDetail={changeUserDetail} />
+                ))
+              }
+            </div>
           </>
         )
       }
@@ -81,7 +85,7 @@ export const Users = () => {
       }
 
       {
-        (!isAddingUser && !user) && <button onClick={() => setIsAddingUser(!isAddingUser)} className="bg-blue-500 text-white p-3 rounded-md hover:bg-sky-700 cursor-pointer shadow-md fixed bottom-25 right-5">
+        (!isAddingUser && !user) && <button onClick={() => setIsAddingUser(!isAddingUser)} className="bg-blue-500 text-white p-3 rounded-md hover:bg-sky-700 cursor-pointer shadow-md fixed bottom-25 right-5 lg:bottom-8 lg:right-8">
           <UserPlus />
         </button>
       }

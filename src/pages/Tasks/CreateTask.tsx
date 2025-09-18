@@ -67,7 +67,7 @@ export const CreateTask = ({ addTask, users, searchUsers }: Props) => {
   }
 
   return (
-    <div className="mx-3 mt-10 border border-zinc-500 rounded-xl py-4 px-5 text-zinc-800">
+    <div className="mx-3 mt-10 lg:max-w-2xl lg:mx-auto border border-zinc-500 rounded-xl py-4 px-5 text-zinc-800">
 
       <form className="flex flex-col" onSubmit={handleSubmit(onSubmit, handleError)}>
         {

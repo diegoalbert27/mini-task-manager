@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { UserTask, useUsers } from "../../hooks/useUsers"
+import { UserTask } from "../../hooks/useUsers"
 import { User } from "./Tasks"
 import { TaskStatus } from "../../components/TaskStatus"
 import { StatusOption } from "../../enums/statusOption.enum"
@@ -19,10 +19,12 @@ export const TaskDetail = ({ task, user, updateTaskStatus }: Props) => {
     updateTaskStatus(user.id, task.id, status)
     setIsEditing(false)
   }
+
+  const statusOptions = Object.values(StatusOption).filter(status => status !== StatusOption.ALL)
   
   return (
     <>
-      <div className='border border-zinc-500 rounded-xl py-4 px-5 flex flex-col text-zinc-800 text-center mt-8'>
+      <div className='border border-zinc-500 rounded-xl py-4 px-5 flex flex-col text-zinc-800 text-center mt-8 lg:max-w-2xl lg:mx-auto'>
         <div className='flex items-center mb-4'>
           <div className='w-12 h-12 rounded-full bg-zinc-300 flex items-center justify-center mr-3'>
             <span className='text-xl font-light'>
@@ -41,7 +43,7 @@ export const TaskDetail = ({ task, user, updateTaskStatus }: Props) => {
           
           <div className={`flex flex-col gap-2 ${isEditing ? '' : 'hidden'}`}>
             {
-              Object.values(StatusOption).map((status) => (
+              statusOptions.map((status) => (
                 <TaskStatus key={status} status={status} handleTaskStatus={() => handleNewStatus(status)} />
               ))
             }

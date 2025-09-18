@@ -21,7 +21,7 @@ export const UserCard = ({ email, lastname, name, tasks, id, changeUserDetail }:
   }
 
   return (
-    <div onClick={handleClick} className='mb-3 border border-zinc-500 rounded-xl py-4 px-5 flex gap-4 text-zinc-800 hover:bg-zinc-100 cursor-pointer shadow-md'>
+    <div onClick={handleClick} className='mb-3 lg:mb-0 border border-zinc-500 rounded-xl py-4 px-5 flex gap-4 text-zinc-800 hover:bg-zinc-100 cursor-pointer shadow-md h-fit'>
       <div className='bg-zinc-300 rounded-full w-12 h-12 flex items-center justify-center'>
         <span className='text-2xl font-light'>{`${name[0]}${lastname[0]}`}</span>
       </div>
