@@ -6,8 +6,6 @@ Una aplicación de gestión de tareas moderna y responsive construida con React,
 
 **[Ver aplicación en funcionamiento →](https://mini-task-manager-xi.vercel.app/)**
 
-![Mini Task Manager Preview](./public/mini-task-manager.png)
-
 ## 🚀 Características Principales
 
 - **Gestión de Usuarios**: Crear, buscar y administrar usuarios del sistema
